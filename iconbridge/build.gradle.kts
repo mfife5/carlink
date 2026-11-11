@@ -1,8 +1,5 @@
 plugins {
     id("com.android.application")
-    // Required so Android Studio's prepareKotlinBuildScriptModel task exists on this
-    // module (Kotlin sources without a Kotlin plugin break IDE sync).
-    id("org.jetbrains.kotlin.android")
 }
 
 android {
@@ -47,8 +44,8 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-
-    kotlinOptions {
-        jvmTarget = "17"
-    }
 }
+
+// Android Studio sync asks every included project for this task. :iconbridge is Java-only
+// (no Kotlin plugin), so register a no-op to satisfy IDE model fetch.
+tasks.register("prepareKotlinBuildScriptModel")
