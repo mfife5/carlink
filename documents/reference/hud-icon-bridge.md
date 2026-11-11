@@ -61,8 +61,13 @@ authority; the bitmap path is the correct one for a companion-hosted provider.
 ### Build
 
 ```bash
-./gradlew :app:bundlePlayRelease :iconbridge:assembleRelease -Pcarlink.buildRoot=./build-out
+./gradlew :app:bundlePlayRelease -Pcarlink.buildRoot=./build-out
+./gradlew -p iconbridge assembleRelease -Pcarlink.buildRoot=./build-out
 ```
+
+`iconbridge/` is a nested standalone Gradle project (its own `settings.gradle.kts`),
+not an included module of the main app — that keeps Android Studio sync of
+`jbr1.carlinkit` free of the `:iconbridge:prepareKotlinBuildScriptModel` failure.
 
 - Display AAB → Play Internal Testing (`jbr1.carlinkit`)
 - Bridge APK → USB drive / `adb install` (`jbr1.carlinkit.hudicons`)

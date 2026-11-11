@@ -18,7 +18,8 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "carlink-native"
-// :app        — jbr1.carlinkit (Play-distributed display / protocol app)
-// :iconbridge — jbr1.carlinkit.hudicons (sideload-only HUD/cluster icon provider)
+// :app only. The HUD icon companion lives in ./iconbridge as a *separate* Gradle
+// project (see iconbridge/settings.gradle.kts) so Android Studio sync of this app
+// is not broken by :iconbridge:prepareKotlinBuildScriptModel. Build it with:
+//   ./gradlew -p iconbridge assembleRelease
 include(":app")
-include(":iconbridge")

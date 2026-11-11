@@ -1,5 +1,11 @@
 plugins {
-    id("com.android.application")
+    id("com.android.application") version "9.4.1"
+}
+
+// Match the main app's out-of-tree build dir when -Pcarlink.buildRoot is set.
+val buildRoot = findProperty("carlink.buildRoot") as String?
+if (buildRoot != null) {
+    layout.buildDirectory.set(file("$buildRoot/iconbridge"))
 }
 
 android {
@@ -45,7 +51,3 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 }
-
-// Android Studio sync asks every included project for this task. :iconbridge is Java-only
-// (no Kotlin plugin), so register a no-op to satisfy IDE model fetch.
-tasks.register("prepareKotlinBuildScriptModel")

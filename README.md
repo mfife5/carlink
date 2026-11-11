@@ -77,10 +77,14 @@ Play locks the reserved Templates Host authority
 authority:
 
 ```bash
-./gradlew :app:bundlePlayRelease :iconbridge:assembleRelease -Pcarlink.buildRoot=./build-out
+./gradlew :app:bundlePlayRelease -Pcarlink.buildRoot=./build-out
+./gradlew -p iconbridge assembleRelease -Pcarlink.buildRoot=./build-out
 # Play  ← …/play/release/*.aab          (jbr1.carlinkit)
 # USB   ← …/iconbridge/release/*.apk    (jbr1.carlinkit.hudicons)
 ```
+
+`iconbridge/` is a nested standalone Gradle project (not part of the Android Studio
+multi-module sync) so the main app imports cleanly.
 
 1. Uninstall any other app that already claims that GM authority.
 2. Install Carlink from Play, then sideload the iconbridge APK while parked.
