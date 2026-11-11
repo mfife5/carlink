@@ -25,27 +25,22 @@ import android.graphics.RectF
  */
 internal object IconBitmapRenderer {
     /**
-     * Viewport size in source coordinates. Apple's MapKit uses 56pt as the nominal canvas,
-     * but the actual shape bounds extend WELL beyond that — empirically verified by calling
-     * the private `MKArrowAppend*ToPathInRect` on macOS arm64e MapKit (2026-05-26):
+     * Share of the bitmap's side the icon's longer bbox edge fills.
      *
-     *   - LeftTurn:  x ranges -42.14 .. +0     (arrowhead tip at -42.14 to the west)
-     *   - RightTurn: x ranges  +25   .. +73.14 (arrowhead tip at +73.14 to the east)
-     *   - U-turn:    x ranges  +0.06 .. +49.5  (vertical-ish, fits)
-     *   - Merge*:    x ranges  +6    .. +49    (fits)
-     *   - ExitRoad*: similar range
-     *   - Roundabouts: span ~R_OUT+STUB+ARROW = ~42 from center
+     * Each icon is scaled to its own bounds, the way the static fallback AVDs
+     * (res/drawable/cp_maneuver_*.xml) are cropped: their viewports sit ~2pt outside the glyph,
+     * so the glyph fills ~92% of the long side. Matching that makes a composed icon the same
+     * size on the HUD as the fallback the first step shows while the route is still composing.
      *
-     * For the left/right turn arrows, the total horizontal span is from -42 to +73 = 115pt.
-     * Centered on Apple's (28, 28) origin, we need viewport ≥ 115 + 2*max(|center-edge|) =
-     * 115 + 2*45 = ~150pt safe. Using 160pt provides ~22pt margin on the leftmost arrowhead
-     * tip and ~14pt margin on the rightmost. Cluster downscales to ~88-200dp regardless,
-     * so the larger viewport doesn't affect visible output quality.
-     *
-     * Prior 96pt viewport CLIPPED the LeftTurn arrowhead (verified 2026-05-26 in Robolectric
-     * test); 160pt fixes it.
+     * History: this used a fixed 160pt viewport (sized before per-icon centering, when one
+     * viewport had to hold every arrow around Apple's (28, 28) origin), which left glyphs
+     * filling about a third of the bitmap — on-truck the composed icons read ~half the size of
+     * the first (fallback) icon / too small on the HUD. Fitting to [GLYPH_FILL] matches the
+     * fallback exactly (Carlink2 revs [201]/[202]). Raise toward 1.0f for slightly larger
+     * glyphs (risk of edge clipping); lower for more padding.
      */
-    private const val VIEWPORT_SIZE = 160.0f
+    private const val GLYPH_FILL = 0.92f
+
     /**
      * Apple's nominal canvas is centered on (28, 28) but the actual icon bbox is NOT
      * always centered there. e.g. LEFT_TURN bbox center is at x=-21.6 (49pt left of canvas
@@ -85,8 +80,6 @@ internal object IconBitmapRenderer {
         val canvas = Canvas(bmp)
         if (canvasBackground != Color.TRANSPARENT) canvas.drawColor(canvasBackground)
 
-        val scale = size.toFloat() / VIEWPORT_SIZE
-
         val bbox = RectF()
         icon.foreground.computeBounds(bbox, true)
         icon.background?.let {
@@ -96,12 +89,17 @@ internal object IconBitmapRenderer {
         }
         val centerX = (bbox.left + bbox.right) / 2.0f
         val centerY = (bbox.top + bbox.bottom) / 2.0f
-        val viewportCenter = VIEWPORT_SIZE / 2.0f
 
-        val matrix = Matrix().apply {
-            setTranslate(viewportCenter - centerX, viewportCenter - centerY)
-            postScale(scale, scale)
-        }
+        // Fit the longer bbox edge to GLYPH_FILL of the bitmap — same cropping as the AVDs.
+        val extent = maxOf(bbox.width(), bbox.height()).coerceAtLeast(1.0f)
+        val scale = size * GLYPH_FILL / extent
+
+        val matrix =
+            Matrix().apply {
+                setTranslate(-centerX, -centerY)
+                postScale(scale, scale)
+                postTranslate(size / 2.0f, size / 2.0f)
+            }
         val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.FILL }
 
         // Background pass — grey junction shape (ring + non-exit spokes + entry)
