@@ -1,5 +1,8 @@
 plugins {
     id("com.android.application")
+    // Required so Android Studio's prepareKotlinBuildScriptModel task exists on this
+    // module (Kotlin sources without a Kotlin plugin break IDE sync).
+    id("org.jetbrains.kotlin.android")
 }
 
 android {
@@ -43,5 +46,9 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = "17"
     }
 }
