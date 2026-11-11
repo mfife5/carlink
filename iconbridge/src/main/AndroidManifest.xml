@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Headless companion. No launcher activity — Templates Host talks to the provider
-         by authority string; the Play-installed jbr1.carlinkit app owns the UI / nav session. -->
+         by authority string; the Play-installed jbr1.carlink app owns the UI / nav session. -->
     <application
         android:allowBackup="false"
         android:label="@string/app_name"

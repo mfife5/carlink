@@ -1,4 +1,4 @@
-package jbr1.carlinkit.hudicons;
+package jbr1.carlink.hudicons;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
@@ -25,7 +25,7 @@ import java.util.Map;
  * latches {@code skipIcons = true} for the session — HUD shows road + distance, no turn glyph.
  *
  * <p>Play Console locks that authority to its first publisher (upstream {@code zeno.carlink},
- * lvalen91/carlink#6), so the Play-distributed {@code jbr1.carlinkit} app cannot declare it.
+ * lvalen91/carlink#6), so the Play-distributed {@code jbr1.carlink} app cannot declare it.
  * This sideloaded companion can. Implemented in Java so the module needs no Kotlin Gradle
  * plugin (avoids Android Studio's {@code prepareKotlinBuildScriptModel} sync failure).
  */

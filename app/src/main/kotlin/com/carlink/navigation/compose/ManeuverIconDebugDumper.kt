@@ -24,7 +24,7 @@ import java.io.FileOutputStream
  * Filename convention:
  *   <idx>_<cpType>_<road>_<exit>.png
  * Example:
- *   /sdcard/Android/data/jbr1.carlinkit/files/composer_test/20260526_051600_StartOnArborDr/
+ *   /sdcard/Android/data/jbr1.carlink/files/composer_test/20260526_051600_StartOnArborDr/
  *     00_11_StartOnArborDr_.png
  *     10_29_EMainSt_exit2.png
  *
@@ -54,7 +54,7 @@ object ManeuverIconDebugDumper {
      * Connects to [ComposedIconStore.debugSink].
      */
     fun enable(context: Context) {
-        // Use INTERNAL storage (getFilesDir) so adb run-as jbr1.carlinkit can read the PNGs.
+        // Use INTERNAL storage (getFilesDir) so adb run-as jbr1.carlink can read the PNGs.
         // External storage (/storage/emulated/.../Android/data/) is locked down on Android 14+
         // even from `adb pull` due to scoped-storage enforcement. Internal files are
         // accessible to `adb shell run-as <pkg>` for the developer's own debuggable builds.

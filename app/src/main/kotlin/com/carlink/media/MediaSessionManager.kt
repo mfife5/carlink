@@ -163,7 +163,7 @@ private val URI_GRANT_CONSUMERS = listOf(
  * decisions in newer code.
  *
  * Reproduced (under the test conditions noted) on:
- *   - jbr1.carlinkit (this Media3 projection app; upstream zeno.carlink) — 2026-04-21.
+ *   - jbr1.carlink (this Media3 projection app; upstream zeno.carlink) — 2026-04-21.
  *   - Apple Music 5.2.1 (com.apple.android.music), a first-party vendor app using
  *     standard MediaBrowserService + MediaSession — 2026-04-21, same symptom.
  * The repro on a first-party vendor app on the same date suggests the issue is not

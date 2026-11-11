@@ -16,8 +16,8 @@ import com.carlink.navigation.ClusterIconDelivery
  * Usage (component-explicit broadcast; works on any API with the debug APK installed):
  *
  *   # force the stable content-URI cluster icons ON (also bypasses the gminfo37 device check)
- *   adb shell am broadcast -n jbr1.carlinkit/com.carlink.debug.DebugOverrideReceiver \
- *       -a jbr1.carlinkit.DEBUG_OVERRIDE --es key cluster_stable_uri_icons --ez value true
+ *   adb shell am broadcast -n jbr1.carlink/com.carlink.debug.DebugOverrideReceiver \
+ *       -a jbr1.carlink.DEBUG_OVERRIDE --es key cluster_stable_uri_icons --ez value true
  *
  *   # force the pre-rev-156 bitmap path
  *   ... --es key cluster_stable_uri_icons --ez value false
@@ -26,7 +26,7 @@ import com.carlink.navigation.ClusterIconDelivery
  *   ... --es key cluster_stable_uri_icons
  *
  *   # just print the current state
- *   adb shell am broadcast -n jbr1.carlinkit/com.carlink.debug.DebugOverrideReceiver -a jbr1.carlinkit.DEBUG_OVERRIDE
+ *   adb shell am broadcast -n jbr1.carlink/com.carlink.debug.DebugOverrideReceiver -a jbr1.carlink.DEBUG_OVERRIDE
  *
  * The receiver runs in the app process, so the in-memory SharedPreferences instance
  * ClusterIconDelivery reads sees the change immediately (no restart). Result is logged under

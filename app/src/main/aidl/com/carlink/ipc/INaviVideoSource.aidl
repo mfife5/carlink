@@ -6,12 +6,12 @@ import com.carlink.ipc.INaviVideoSink;
 /**
  * Producer of the CPC200 AltVideo (USB MsgType 0x2C) navigation stream.
  *
- * Implemented by jbr1.carlinkit (carlink fork) and exposed via a bound
+ * Implemented by jbr1.carlink (carlink fork) and exposed via a bound
  * Service. Consumers register sinks; the producer broadcasts demuxed frames
  * to every registered sink.
  *
  * Service ComponentName:
- *   jbr1.carlinkit / jbr1.carlinkit.ipc.NaviVideoSourceService
+ *   jbr1.carlink / jbr1.carlink.ipc.NaviVideoSourceService
  *
  * Permission protecting the service:
  *   com.carlink.permission.NAVI_VIDEO_STREAM (signature|privileged)

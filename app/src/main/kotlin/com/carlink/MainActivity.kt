@@ -1014,7 +1014,7 @@ class MainActivity : ComponentActivity() {
 
     /**
      * Launches CarAppActivity in a separate task to trigger Templates Host binding.
-     * Combined with taskAffinity="jbr1.carlinkit.templates" and singleTask launch mode,
+     * Combined with taskAffinity="jbr1.carlink.templates" and singleTask launch mode,
      * this opens in its own task stack without disturbing MainActivity.
      *
      * Guarded by [ClusterBindingState.sessionAlive] — only launches if no live session

@@ -1,4 +1,4 @@
-package jbr1.carlinkit.ipc
+package jbr1.carlink.ipc
 
 import android.app.Service
 import android.content.Intent
@@ -11,10 +11,10 @@ import com.carlink.ipc.NaviVideoSingleton
  * Bound Service that exposes the carlink_native AltVideo (USB 0x2C) stream
  * to other apps over AIDL.
  *
- * Class FQN deliberately lives under `jbr1.carlinkit.ipc` (matching the
+ * Class FQN deliberately lives under `jbr1.carlink.ipc` (matching the
  * applicationId, not the Kotlin namespace `com.carlink`) so the ComponentName
  * the consumer binds to —
- *   ComponentName("jbr1.carlinkit", "jbr1.carlinkit.ipc.NaviVideoSourceService")
+ *   ComponentName("jbr1.carlink", "jbr1.carlink.ipc.NaviVideoSourceService")
  * — resolves correctly. The AIDL interfaces themselves stay under
  * `com.carlink.ipc` to match the consumer's package import.
  *

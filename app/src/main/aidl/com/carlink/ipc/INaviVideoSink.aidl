@@ -5,7 +5,7 @@ package com.carlink.ipc;
  * Consumer of the CPC200 AltVideo (USB MsgType 0x2C) navigation stream.
  *
  * Implemented by the cluster-home app and registered with the producer
- * (jbr1.carlinkit). The producer strips the 16-byte USB header and the 20-byte
+ * (jbr1.carlink). The producer strips the 16-byte USB header and the 20-byte
  * video header, then pushes raw Annex-B H.264 NAL units via {@link #onFrame}.
  *
  * All methods are oneway: the producer must not block on the consumer.

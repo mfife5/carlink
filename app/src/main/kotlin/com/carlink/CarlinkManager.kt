@@ -1030,7 +1030,7 @@ class CarlinkManager(
             if (naviGateEnabled) {
                 "[NAVI_GATE] AltVideo (0x2C) forwarding ENABLED — debug build on AAOS emulator. " +
                     "naviScreenInfo will be sent in BoxSettings; 0x2C frames will be forwarded to " +
-                    "jbr1.carlinkit.ipc.NaviVideoSourceService consumers."
+                    "jbr1.carlink.ipc.NaviVideoSourceService consumers."
             } else {
                 "[NAVI_GATE] AltVideo (0x2C) forwarding disabled (debug=${BuildConfig.DEBUG}, " +
                     "emulator=${PlatformDetector.detect(context).isAaosEmulator()})"

@@ -4,10 +4,10 @@
 
     <!-- Package visibility (API 30+): NavigationStateManager.initialize() must resolve the
          GM cluster-icon authority when it is hosted by the sideloaded :iconbridge APK
-         (jbr1.carlinkit.hudicons). Without this, resolveContentProvider() returns null on
+         (jbr1.carlink.hudicons). Without this, resolveContentProvider() returns null on
          Play builds and AA maneuver bitmaps stay disabled — text-only HUD/cluster nav. -->
     <queries>
-        <package android:name="jbr1.carlinkit.hudicons" />
+        <package android:name="jbr1.carlink.hudicons" />
         <provider android:authorities="com.google.android.apps.automotive.templates.host.ClusterIconContentProvider" />
     </queries>
 
@@ -25,7 +25,7 @@
     <uses-permission android:name="androidx.car.app.NAVIGATION_TEMPLATES" />
     <!-- Cluster CarAppService draws into the host-provided render surface. Verified on
          the AAOS emulator: the Templates Host provisions a virtual display
-         "virtual:jbr1.carlinkit,<uid>,CarAppService,0" owned by this app. Required by
+         "virtual:jbr1.carlink,<uid>,CarAppService,0" owned by this app. Required by
          Play AAOS review for navigation apps (developer.android.com/training/cars/apps/library/draw-maps). -->
     <uses-permission android:name="androidx.car.app.ACCESS_SURFACE" />
 
@@ -136,7 +136,7 @@
             android:name="androidx.car.app.activity.CarAppActivity"
             android:exported="false"
             android:launchMode="singleTask"
-            android:taskAffinity="jbr1.carlinkit.templates"
+            android:taskAffinity="jbr1.carlink.templates"
             android:excludeFromRecents="true"
             android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <meta-data
@@ -165,7 +165,7 @@
                  app and an MBS: MediaSource.isMediaTemplate() classifies dual-role
                  apps as "non media template" unless this explicit opt-in is present.
                  Without it the homescreen Media card hides carlink, and any source
-                 re-election after a force-close fails to promote jbr1.carlinkit (which
+                 re-election after a force-close fails to promote jbr1.carlink (which
                  in turn leaves ClusterHome with nothing to mirror). -->
             <meta-data
                 android:name="androidx.car.app.launchable"
@@ -192,7 +192,7 @@
         </service>
 
         <!-- AltVideo (USB 0x2C) producer Service. ClusterHomeDisplay binds to
-             ComponentName("jbr1.carlinkit", "jbr1.carlinkit.ipc.NaviVideoSourceService"),
+             ComponentName("jbr1.carlink", "jbr1.carlink.ipc.NaviVideoSourceService"),
              so the class FQN must be the applicationId-prefixed form (NOT the
              namespace-prefixed .ipc.NaviVideoSourceService shorthand). The class
              lives at app/src/main/kotlin/jbr1/carlinkit/ipc/NaviVideoSourceService.kt
@@ -203,7 +203,7 @@
              naviScreenInfo from being sent — without that, the adapter never emits
              0x2C and no consumer binds. Cost of leaving it exported on prod: zero. -->
         <service
-            android:name="jbr1.carlinkit.ipc.NaviVideoSourceService"
+            android:name="jbr1.carlink.ipc.NaviVideoSourceService"
             android:exported="true"
             android:permission="com.carlink.permission.NAVI_VIDEO_STREAM" />
 

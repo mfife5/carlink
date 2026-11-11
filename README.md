@@ -1,7 +1,7 @@
-# Carlink (`jbr1.carlinkit`)
+# Carlink (`jbr1.carlink`)
 
 Fork of [lvalen91/carlink](https://github.com/lvalen91/carlink) configured for Google Play
-under the package name **`jbr1.carlinkit`**.
+under the package name **`jbr1.carlink`**.
 
 Upstream is a native Kotlin CarPlay / Android Auto projection app for the
 [Carlinkit CPC200-CCPA](https://www.carlinkit.com/ccpa) adapter. This fork changes Play-facing
@@ -9,11 +9,11 @@ identity so it does not collide with the original `zeno.carlink` listing:
 
 | Identity | This fork | Upstream |
 |---|---|---|
-| `applicationId` / Play package | `jbr1.carlinkit` | `zeno.carlink` |
-| Play cluster-icon authority | `jbr1.carlinkit.ClusterIconContentProvider` | GM Templates Host authority (owner-only) |
-| Album-art FileProvider | `jbr1.carlinkit.albumart` | `zeno.carlink.albumart` |
-| CarAppActivity taskAffinity | `jbr1.carlinkit.templates` | `zeno.carlink.templates` |
-| AltVideo IPC service | `jbr1.carlinkit.ipc.NaviVideoSourceService` | `zeno.carlink.ipc.NaviVideoSourceService` |
+| `applicationId` / Play package | `jbr1.carlink` | `zeno.carlink` |
+| Play cluster-icon authority | `jbr1.carlink.ClusterIconContentProvider` | GM Templates Host authority (owner-only) |
+| Album-art FileProvider | `jbr1.carlink.albumart` | `zeno.carlink.albumart` |
+| CarAppActivity taskAffinity | `jbr1.carlink.templates` | `zeno.carlink.templates` |
+| AltVideo IPC service | `jbr1.carlink.ipc.NaviVideoSourceService` | `zeno.carlink.ipc.NaviVideoSourceService` |
 
 Sign release / Play builds with **your own** upload keystore (never reuse upstream keys).
 
@@ -49,7 +49,7 @@ in CI before uploading to Play.
 ### Publish on Play (GM / no ADB)
 
 1. Create an app in [Google Play Console](https://play.google.com/console/) with package
-   **`jbr1.carlinkit`**.
+   **`jbr1.carlink`**.
 2. Upload the `play` release AAB to an **Internal Testing** track.
 3. Add your Google account as a tester, accept the opt-in link, install from Play **on the
    head unit** while signed into that account.
@@ -71,7 +71,7 @@ app + HUD icon bridge below — a fully sideloaded UI is covered when leaving Pa
 Play locks the reserved Templates Host authority
 `com.google.android.apps.automotive.templates.host.ClusterIconContentProvider` to upstream
 `zeno.carlink` ([issue #6](https://github.com/lvalen91/carlink/issues/6)). A Play-only
-`jbr1.carlinkit` install therefore gets **text nav without turn glyphs** on gminfo3.7.
+`jbr1.carlink` install therefore gets **text nav without turn glyphs** on gminfo3.7.
 
 **Fix:** keep the display app on Play, and sideload a tiny companion that owns the reserved
 authority:
@@ -79,8 +79,8 @@ authority:
 ```bash
 ./gradlew :app:bundlePlayRelease -Pcarlink.buildRoot=./build-out
 ./gradlew -p iconbridge assembleRelease -Pcarlink.buildRoot=./build-out
-# Play  ← …/play/release/*.aab          (jbr1.carlinkit)
-# USB   ← …/iconbridge/release/*.apk    (jbr1.carlinkit.hudicons)
+# Play  ← …/play/release/*.aab          (jbr1.carlink)
+# USB   ← …/iconbridge/release/*.apk    (jbr1.carlink.hudicons)
 ```
 
 `iconbridge/` is a nested standalone Gradle project (not part of the Android Studio
@@ -89,7 +89,7 @@ multi-module sync) so the main app imports cleanly.
 1. Uninstall any other app that already claims that GM authority.
 2. Install Carlink from Play, then sideload the iconbridge APK while parked.
 3. Relaunch Carlink; look for
-   `[NAVI_ICON] Cluster icon provider available via jbr1.carlinkit.hudicons`.
+   `[NAVI_ICON] Cluster icon provider available via jbr1.carlink.hudicons`.
 
 Details: [documents/reference/hud-icon-bridge.md](documents/reference/hud-icon-bridge.md).
 Does not apply on GM VCU radios (enum-only cluster glyphs).

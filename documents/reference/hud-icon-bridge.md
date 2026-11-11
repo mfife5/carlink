@@ -17,8 +17,8 @@ Google Play enforces content-provider authority uniqueness and locked
 ([lvalen91/carlink#6](https://github.com/lvalen91/carlink/issues/6)). Any other
 Play AAB that declares it is rejected ("authority in use by other developers").
 
-This fork's Play package is `jbr1.carlinkit`. Its `play` flavor therefore
-registers a **derived** authority (`jbr1.carlinkit.ClusterIconContentProvider`)
+This fork's Play package is `jbr1.carlink`. Its `play` flavor therefore
+registers a **derived** authority (`jbr1.carlink.ClusterIconContentProvider`)
 so the AAB uploads. Templates Host never calls that derived authority, so a
 Play-only install shows **road name + distance with no turn glyph** on the
 cluster/HUD.
@@ -33,7 +33,7 @@ owns the reserved authority.
 |---|---|
 | Play AAB claiming the reserved GM authority | Play Console reject |
 | Play AAB with app-unique authority only | Uploads; HUD icons never render |
-| Sideloading the full `jbr1.carlinkit` APK (sideload flavor) | Icons work, but GM covers the UI when leaving Park (distraction overlay) |
+| Sideloading the full `jbr1.carlink` APK (sideload flavor) | Icons work, but GM covers the UI when leaving Park (distraction overlay) |
 
 There is no single-APK Play path that both uploads and delivers icons.
 
@@ -44,8 +44,8 @@ Same idea as [enigy Carlink2](https://github.com/enigy/Carlink-legacy) / Eric Ya
 
 | App | Package | Install | Role |
 |---|---|---|---|
-| Display | `jbr1.carlinkit` | Google Play | UI, USB, CarPlay/AA, Car App Library nav session (sends CarIcons) |
-| Icon bridge | `jbr1.carlinkit.hudicons` | Sideload (USB drive / adb) | Hosts the reserved `ClusterIconContentProvider` |
+| Display | `jbr1.carlink` | Google Play | UI, USB, CarPlay/AA, Car App Library nav session (sends CarIcons) |
+| Icon bridge | `jbr1.carlink.hudicons` | Sideload (USB drive / adb) | Hosts the reserved `ClusterIconContentProvider` |
 
 Templates Host resolves the provider **by authority string**, not by the nav
 app's package. The bridge's exported provider receives `insert` / `query` /
@@ -67,10 +67,10 @@ authority; the bitmap path is the correct one for a companion-hosted provider.
 
 `iconbridge/` is a nested standalone Gradle project (its own `settings.gradle.kts`),
 not an included module of the main app — that keeps Android Studio sync of
-`jbr1.carlinkit` free of the `:iconbridge:prepareKotlinBuildScriptModel` failure.
+`jbr1.carlink` free of the `:iconbridge:prepareKotlinBuildScriptModel` failure.
 
-- Display AAB → Play Internal Testing (`jbr1.carlinkit`)
-- Bridge APK → USB drive / `adb install` (`jbr1.carlinkit.hudicons`)
+- Display AAB → Play Internal Testing (`jbr1.carlink`)
+- Bridge APK → USB drive / `adb install` (`jbr1.carlink.hudicons`)
 
 ### Install on the head unit
 
@@ -78,11 +78,11 @@ not an included module of the main app — that keeps Android Studio sync of
    `com.google.android.apps.automotive.templates.host.ClusterIconContentProvider`
    (upstream sideload APK, Carlink2 bridge, etc.) — Android only allows one
    claimant (`INSTALL_FAILED_CONFLICTING_PROVIDER`).
-2. Install `jbr1.carlinkit` from Play.
+2. Install `jbr1.carlink` from Play.
 3. While parked, sideload `iconbridge-release.apk` (Files app from USB, or adb).
 4. Force-stop / relaunch Carlink so the icon probe runs with the bridge present.
 5. Drive a route: log should show
-   `[NAVI_ICON] Cluster icon provider available via jbr1.carlinkit.hudicons …`.
+   `[NAVI_ICON] Cluster icon provider available via jbr1.carlink.hudicons …`.
 
 ### Platform limits (unchanged)
 

@@ -9,14 +9,14 @@ if (buildRoot != null) {
 }
 
 android {
-    namespace = "jbr1.carlinkit.hudicons"
+    namespace = "jbr1.carlink.hudicons"
     compileSdk = 37
 
     defaultConfig {
         // Sideload-only companion. Never upload this package to Play — it claims the
         // reserved GM Templates Host cluster-icon authority that Play locks to the first
         // publisher (upstream zeno.carlink / issue #6).
-        applicationId = "jbr1.carlinkit.hudicons"
+        applicationId = "jbr1.carlink.hudicons"
         minSdk = 29
         targetSdk = 36
         versionCode = 1

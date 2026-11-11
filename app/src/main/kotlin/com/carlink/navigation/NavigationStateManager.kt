@@ -237,7 +237,7 @@ object NavigationStateManager {
                 logWarn(
                     "[NAVI_ICON] Cluster icon provider unavailable — AA maneuver bitmaps disabled; " +
                         "falling back to type-based maneuver icons. For Play installs on gminfo3.7, " +
-                        "sideload the :iconbridge APK (jbr1.carlinkit.hudicons) so Templates Host " +
+                        "sideload the :iconbridge APK (jbr1.carlink.hudicons) so Templates Host " +
                         "can claim the reserved GM authority.",
                     tag = Logger.Tags.NAVI,
                 )

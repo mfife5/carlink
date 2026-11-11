@@ -12,7 +12,7 @@ android {
     // Owner identity for the cluster icon ContentProvider hook (issue #6).
     // A FORK changes ONLY ownerApplicationId below — applicationId and the play-flavor
     // cluster icon authority both follow it automatically.
-    val ownerApplicationId = "jbr1.carlinkit"
+    val ownerApplicationId = "jbr1.carlink"
     val gmClusterIconAuthority =
         "com.google.android.apps.automotive.templates.host.ClusterIconContentProvider"
 
