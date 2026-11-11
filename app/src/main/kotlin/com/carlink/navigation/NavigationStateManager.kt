@@ -221,16 +221,24 @@ object NavigationStateManager {
             clusterIconProviderOwnedByApp = providerInfo != null && providerInfo.packageName == appContext.packageName
 
             if (isAccessible) {
+                val ownership =
+                    if (clusterIconProviderOwnedByApp) {
+                        "owned by this app"
+                    } else {
+                        "hosted by companion ${providerInfo!!.packageName} (sideloaded HUD icon bridge)"
+                    }
                 logInfo(
-                    "[NAVI_ICON] Cluster icon provider available via ${providerInfo.packageName} " +
-                        "(exported=${providerInfo.exported}) — AA maneuver bitmaps enabled",
+                    "[NAVI_ICON] Cluster icon provider available via ${providerInfo!!.packageName} " +
+                        "(exported=${providerInfo.exported}, $ownership) — AA maneuver bitmaps enabled",
                     tag = Logger.Tags.NAVI,
                 )
             } else {
                 dropCurrentManeuverIcon()
                 logWarn(
                     "[NAVI_ICON] Cluster icon provider unavailable — AA maneuver bitmaps disabled; " +
-                        "falling back to type-based maneuver icons",
+                        "falling back to type-based maneuver icons. For Play installs on gminfo3.7, " +
+                        "sideload the :iconbridge APK (jbr1.carlinkit.hudicons) so Templates Host " +
+                        "can claim the reserved GM authority.",
                     tag = Logger.Tags.NAVI,
                 )
             }

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Headless companion. No launcher activity — Templates Host talks to the provider
+         by authority string; the Play-installed jbr1.carlinkit app owns the UI / nav session. -->
+    <application
+        android:allowBackup="false"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        tools:ignore="MissingApplicationIcon">
+
+        <!-- Claims the orphaned GM Templates Host authority. Play rejects this authority for
+             any package except the first publisher; sideloading is the only fork-compatible
+             path to HUD / cluster maneuver icons on gminfo3.7 (lvalen91/carlink#6,
+             enigy Carlink2 bridge pattern). Must be exported: host + cluster are other UIDs. -->
+        <provider
+            android:name=".ClusterIconProvider"
+            android:authorities="com.google.android.apps.automotive.templates.host.ClusterIconContentProvider"
+            android:exported="true"
+            android:grantUriPermissions="true"
+            tools:ignore="ExportedContentProvider" />
+    </application>
+</manifest>

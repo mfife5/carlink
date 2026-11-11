@@ -18,4 +18,7 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "carlink-native"
+// :app        — jbr1.carlinkit (Play-distributed display / protocol app)
+// :iconbridge — jbr1.carlinkit.hudicons (sideload-only HUD/cluster icon provider)
 include(":app")
+include(":iconbridge")

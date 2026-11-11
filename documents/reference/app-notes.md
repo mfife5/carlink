@@ -68,8 +68,14 @@ change: a fork changes only its `applicationId`, and the `play` flavor automatic
 a unique authority (`<applicationId>.ClusterIconContentProvider`) to get past the Play
 Console check. But GM AAOS only ever calls the real GM authority, so that derived provider
 is never invoked on the head unit — it lets a fork upload, it does not deliver icons to the
-cluster. **Net result: a fork can publish, but without the GM authority the cluster shows
-text navigation only — no maneuver icons.**
+cluster. **Net result: a Play-only fork shows text navigation only — no maneuver icons.**
+
+**Workaround used by this fork (`jbr1.carlinkit`):** sideload a headless companion APK
+(`:iconbridge` / `jbr1.carlinkit.hudicons`) that claims the reserved GM authority, while the
+Play app keeps sending CarIcons through the Car App Library. Templates Host resolves the
+provider by authority string, so HUD/cluster glyphs work without putting the reserved
+authority in the Play AAB. See [hud-icon-bridge.md](hud-icon-bridge.md). Same pattern as
+enigy Carlink2 and Eric Yanush's [PR #15](https://github.com/lvalen91/carlink/pull/15).
 
 ### GM VCU platform (Bosch VCUNH1)
 

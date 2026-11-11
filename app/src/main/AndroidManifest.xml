@@ -2,6 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- Package visibility (API 30+): NavigationStateManager.initialize() must resolve the
+         GM cluster-icon authority when it is hosted by the sideloaded :iconbridge APK
+         (jbr1.carlinkit.hudicons). Without this, resolveContentProvider() returns null on
+         Play builds and AA maneuver bitmaps stay disabled — text-only HUD/cluster nav. -->
+    <queries>
+        <package android:name="jbr1.carlinkit.hudicons" />
+        <provider android:authorities="com.google.android.apps.automotive.templates.host.ClusterIconContentProvider" />
+    </queries>
+
     <!-- Permissions -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />

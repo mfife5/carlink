@@ -63,7 +63,32 @@ adb install -i com.android.vending path/to/app-sideload-release.apk
 
 The `-i com.android.vending` flag records Play as the installer so AAOS honors distraction
 optimization. The sideload flavor claims the GM cluster-icon authority (useful on-device;
-do **not** upload that APK to Play).
+do **not** upload that APK to Play). On GM production radios without ADB, prefer the Play
+app + HUD icon bridge below — a fully sideloaded UI is covered when leaving Park.
+
+## HUD / cluster turn icons (Play fork workaround)
+
+Play locks the reserved Templates Host authority
+`com.google.android.apps.automotive.templates.host.ClusterIconContentProvider` to upstream
+`zeno.carlink` ([issue #6](https://github.com/lvalen91/carlink/issues/6)). A Play-only
+`jbr1.carlinkit` install therefore gets **text nav without turn glyphs** on gminfo3.7.
+
+**Fix:** keep the display app on Play, and sideload a tiny companion that owns the reserved
+authority:
+
+```bash
+./gradlew :app:bundlePlayRelease :iconbridge:assembleRelease -Pcarlink.buildRoot=./build-out
+# Play  ← …/play/release/*.aab          (jbr1.carlinkit)
+# USB   ← …/iconbridge/release/*.apk    (jbr1.carlinkit.hudicons)
+```
+
+1. Uninstall any other app that already claims that GM authority.
+2. Install Carlink from Play, then sideload the iconbridge APK while parked.
+3. Relaunch Carlink; look for
+   `[NAVI_ICON] Cluster icon provider available via jbr1.carlinkit.hudicons`.
+
+Details: [documents/reference/hud-icon-bridge.md](documents/reference/hud-icon-bridge.md).
+Does not apply on GM VCU radios (enum-only cluster glyphs).
 
 ## Key limitations
 
@@ -76,9 +101,8 @@ Full explanations in **[app notes](documents/reference/app-notes.md)**:
   [custom firmware](#custom-adapter-firmware) restores full iAP2 route data, and the app
   renders CarPlay maneuver icons on-device.
   [Details](documents/reference/app-notes.md#navigation-turn-by-turn)
-- **Cluster navigation icons** work only on gminfo3.7 and only for this build — forks can
-  publish but won't deliver cluster icons (Google locks the GM provider authority to its
-  first publisher).
+- **Cluster navigation icons** on gminfo3.7 need the reserved GM authority — use the
+  sideloaded `:iconbridge` companion with a Play install (see above).
   [Details](documents/reference/app-notes.md#cluster-navigation-icons-gminfo37-only--for-forks--other-developers)
 - **GM VCU (Bosch VCUNH1)** vehicles ignore app-supplied cluster icons entirely.
   [Details](documents/reference/app-notes.md#gm-vcu-platform-bosch-vcunh1)
