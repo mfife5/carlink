@@ -195,7 +195,7 @@
              ComponentName("jbr1.carlink", "jbr1.carlink.ipc.NaviVideoSourceService"),
              so the class FQN must be the applicationId-prefixed form (NOT the
              namespace-prefixed .ipc.NaviVideoSourceService shorthand). The class
-             lives at app/src/main/kotlin/jbr1/carlinkit/ipc/NaviVideoSourceService.kt
+             lives at app/src/main/kotlin/jbr1/carlink/ipc/NaviVideoSourceService.kt
              to match.
 
              Service is exported and present in all builds; it is inert on release
